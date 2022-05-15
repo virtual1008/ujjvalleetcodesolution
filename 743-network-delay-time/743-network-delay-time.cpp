@@ -8,27 +8,29 @@ public:
             int c=it[2];
             adj[a].push_back({b,c});
         }
-        vector<int> ti(n+1,INT_MAX);
-        ti[0]=0;
-        ti[k]=0;
-        queue<int> q;
-        q.push(k);
-        while(!q.empty()){
-            int node=q.front();
-            q.pop();
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        vector<int> dist(n+1,INT_MAX);
+        dist[k]=0;
+        pq.push({0,k});
+        while(!pq.empty()){
+            int di=pq.top().first;
+            int node=pq.top().second;
+            pq.pop();
             for(auto it:adj[node]){
-                int a=it.first;
-                int b=it.second;
-                if(ti[a]>ti[node]+b){
-                    ti[a]=ti[node]+b;
-                    q.push(a);
+                int next=it.first;
+                int nextdist=it.second;
+                if(dist[next]>dist[node]+nextdist){
+                    dist[next]=dist[node]+nextdist;
+                    pq.push({dist[next],next});
                 }
             }
         }
-        int maxi=INT_MIN;
-        for(auto it:ti) maxi=max(maxi,it);
-        if(maxi==INT_MAX) return -1;
-        return maxi;
+        int ans=INT_MIN;
+        for(int i=1;i<=n;i++){
+            ans=max(ans,dist[i]);
+        }
+        if(ans==INT_MAX) return -1;
+        return ans;
         
     }
 };
