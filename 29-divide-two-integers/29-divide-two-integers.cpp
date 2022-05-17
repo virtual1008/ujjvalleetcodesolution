@@ -14,7 +14,7 @@ public:
         for(int i=31; i>=0; i--){
             if(temp + (m << i) <= n){
                 temp += m << i;
-					q += 1 << i;   
+					q += 1 << i;      //  q |= 1 << i;
             }
         }
         return sign * q;
