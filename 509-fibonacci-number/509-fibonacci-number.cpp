@@ -1,14 +1,12 @@
 class Solution {
 public:
+    int rec(int n,vector<int>&dp){
+        if(n==0 || n==1) return n;
+        if(dp[n]!=-1) return dp[n];
+        return dp[n]=rec(n-1,dp)+rec(n-2,dp);
+    }
     int fib(int n) {
-        int first=0;
-        int second=1;
-        for(int i=1;i<=n;i++){
-            int temp=first+second;
-            first=second;
-            second=temp;
-        }
-        return first;
-        
+        vector<int> dp(n+1,-1);
+        return rec(n,dp);
     }
 };
