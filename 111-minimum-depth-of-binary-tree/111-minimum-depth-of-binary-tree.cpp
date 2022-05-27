@@ -11,24 +11,22 @@
  */
 class Solution {
 public:
-    int mi=INT_MAX;
-    void findans(TreeNode* root,int count)
-    {
-        if(!root)
-            return ;
-        if(root->left==nullptr && root->right==nullptr)
-        {
-            mi=min(mi,count+1);
-            return ;
-        }
-        count++;
-        findans(root->left,count);
-        findans(root->right,count);
+    
+    int height(TreeNode* root){
+        if(root==NULL) return 0;
+        int l=INT_MAX;
+        int r=INT_MAX;
+        if(root->left==NULL && root->right==NULL) return 1;
+        if(root->left)
+         l=height(root->left)+1;
+        if(root->right)
+         r=height(root->right)+1;
+        return min(l,r);
     }
+    
     int minDepth(TreeNode* root) {
-        if(root==nullptr)
-            return 0;
-        findans(root,0);
-        return mi;
+      //if(root==NULL) return 0;
+      return height(root);
+        
     }
 };
