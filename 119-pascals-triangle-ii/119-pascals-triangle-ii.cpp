@@ -1,24 +1,31 @@
 class Solution {
 public:
-    vector<int> getRow(int rowIndex) {
-        vector<vector<int>> check;
-        check.push_back({1});
-        check.push_back({1,1});
-        for(int i=2;i<34;i++){
-            vector<int> temp(i+1);
-            temp[0]=1;
-            temp[i]=1;
-            int l=1,r=i-1;
-            while(l<=r){
-                int a=check[i-1][l-1];
-                int b=check[i-1][l];
-                temp[l]=a+b;
-                temp[r]=a+b;
-                r--;
-                l++;
+    vector<int> getRow(int n) {
+        vector<int> curr={1};
+
+    if(n==0){
+        return curr;
+    }
+
+    while (n--)
+    {
+        vector<int> temp(curr.size()+1,0);
+        for (int i = 0; i < temp.size(); i++)
+        {
+            if(i-1>=0){
+                temp[i]+=curr[i-1];
             }
-            check.push_back(temp);
+            if(i<=curr.size()-1){
+                temp[i]+=curr[i];
+            }
+            
+
         }
-        return check[rowIndex];
+        curr=temp;
+  
+        
+
+    }
+    return curr;
     }
 };
