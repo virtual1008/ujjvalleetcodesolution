@@ -1,19 +1,29 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
-    vector<int> helper(TreeNode* root){
-       if(root == nullptr){
-           return vector<int>(2,0);
-       }
-       vector<int> left = helper(root->left);
-       vector<int> right = helper(root->right);
-       vector<int> res(2,0);
-       res[0] = left[1] + right[1] + root->val;
-       res[1] = max(left[0],left[1]) + max(right[0],right[1]);
-       return res;
+    int rec(TreeNode* root ,map<TreeNode*,int>& dp){
+        if(root==NULL) return 0;
+        if(root->left==NULL && root->right==NULL) return root->val;
+        if(dp[root]!=0) return dp[root];
+        int pick=root->val;
+        if(root->left) pick+=rec(root->left->left,dp)+rec(root->left->right,dp);
+        if(root->right) pick+=rec(root->right->left,dp)+rec(root->right->right,dp);
+        int notpick=rec(root->left,dp)+rec(root->right,dp);
+        return dp[root]=max(pick,notpick);
     }
-    
     int rob(TreeNode* root) {
-        vector<int> y = helper(root);
-        return max(y[0],y[1]);
+        map<TreeNode*,int> dp;
+        int c=rec(root,dp);
+        return c;
     }
 };
