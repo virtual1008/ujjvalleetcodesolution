@@ -10,9 +10,20 @@ public:
             return dp[i][j][k]=max(prices[i]+rec(i+1,1,k-1,prices,dp),rec(i+1,0,k,prices,dp));
         }
     }
-    int maxProfit(int k, vector<int>& prices) {
+    int maxProfit(int t, vector<int>& prices) {
         int n=prices.size();
-        vector<vector<vector<int>>> dp(n,vector<vector<int>>(2,vector<int>(k+1,-1)));
-        return rec(0,1,k,prices,dp);
+        vector<vector<vector<int>>> dp(n+1,vector<vector<int>>(2,vector<int>(t+1,0)));
+         for(int i=n-1;i>=0;i--){
+             for(int j=0;j<=1;j++){
+                 for(int k=1;k<=t;k++){
+                     if(j){
+                         dp[i][j][k]=max(-prices[i]+dp[i+1][0][k],dp[i+1][1][k]);
+                     }else{
+                         dp[i][j][k]=max(prices[i]+dp[i+1][1][k-1],dp[i+1][0][k]);
+                     }
+                 }
+             }
+         }
+        return dp[0][1][t];
     }
 };
