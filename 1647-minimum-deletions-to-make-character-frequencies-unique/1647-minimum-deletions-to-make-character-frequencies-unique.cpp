@@ -1,10 +1,11 @@
 class Solution {
 public:
     int minDeletions(string s) {
-        map<char,int> m;
-        for(auto it:s) m[it]++;
-        vector<int> v;
-        for(auto it:m) v.push_back(it.second);
+       
+        vector<int> v(26,0);
+         for(auto it:s){
+             v[it-'a']++;
+         }
         sort(v.begin(),v.end(),greater<int>());
         int ans=0;
         int pre=v[0];
