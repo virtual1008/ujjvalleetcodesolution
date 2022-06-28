@@ -12,7 +12,21 @@ public:
     }
     int numRollsToTarget(int n, int k, int target) {
         int mod=1e9+7;
-        vector<vector<int>> dp(n+1,vector<int>(target+1,-1));
-        return rec(n,target,mod,k,dp);
+        vector<vector<int>> dp(n+1,vector<int>(target+1,0));
+        dp[0][0]=1;
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=target;j++){
+                int take=0;
+                for(int a=1;a<=k;a++){
+                    take=(take)%mod;
+                    if(a<=j){
+                        take=(take%mod+dp[i-1][j-a]%mod)%mod;
+                    }
+                }
+                dp[i][j]=take;
+            }
+        }
+        return dp[n][target];
+        //return rec(n,target,mod,k,dp);
     }
 };
