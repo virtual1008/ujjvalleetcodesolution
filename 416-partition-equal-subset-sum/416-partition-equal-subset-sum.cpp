@@ -1,31 +1,33 @@
 class Solution {
 public:
-    int sum;
-    long long getans(vector<int>& nums,int index,int sumg,vector<vector<int>>&dp)
-    {
-        if(index==-1)
-            return 0;
-        if(sum==sumg)
-            return 1;
-            if(dp[index][sumg]!=-1)
-                return dp[index][sumg];
-        return dp[index][sumg]=(getans(nums,index-1,sumg+nums[index],dp)+getans(nums,index-1,sumg,dp));
+    bool rec(int i,int j,vector<int> nums,vector<vector<int>> &dp){
+        if(j==0) return true;
+        if(i<0) return false;
+        if(dp[i][j]!=-1) return dp[i][j];
+        bool take=false;
+        if(nums[i]<=j){
+            take=rec(i-1,j-nums[i],nums,dp);
+        }
+        bool ntake=rec(i-1,j,nums,dp);
+        return dp[i][j]=take||ntake;
     }
     bool canPartition(vector<int>& nums) {
-        sum=0;
-        for(int i=0;i<nums.size();i++)
-        {
-            sum+=nums[i];
+        int sum=0;
+        for(auto it:nums) sum+=it;
+        if(sum%2!=0) return false;
+        sum/=2;
+        int n=nums.size();
+        vector<vector<int>> dp(n+1,vector<int>(sum+1,0));
+        for(int i=0;i<n;i++) dp[i][0]=1;
+        //return rec(n-1,sum,nums,dp);
+        for(int i=1;i<n;i++){
+            for(int j=0;j<=sum;j++){
+                bool take=false,ntake=false;
+                if(j>=nums[i]) take=dp[i-1][j-nums[i]];
+                ntake=dp[i-1][j];
+                dp[i][j]=take||ntake;
+            }
         }
-        vector<vector<int>>dp(nums.size(),vector<int>(sum,-1));
-        if(sum%2==0)
-        {
-            sum/=2;
-            long long k=getans(nums,nums.size()-1,0,dp);
-            if(k)
-                return true;
-            return false;
-        }
-        return false;
+        return dp[n-1][sum];
     }
 };
