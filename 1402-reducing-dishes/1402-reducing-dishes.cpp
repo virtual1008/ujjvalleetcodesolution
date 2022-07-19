@@ -1,26 +1,16 @@
 class Solution {
 public:
-    int t[501][502];
-    int solve(vector<int>& satisfaction,int time , int i){
-        if(i>=satisfaction.size())
-            return 0;
-        
-        if(t[i][time]!=-1)
-            return t[i][time];
-        int ans=solve(satisfaction,time,i+1);
-        ans=max(ans,satisfaction[i]*time+solve(satisfaction,time+1,i+1));
-        
-        return t[i][time]=ans;
-        
-    }
-    
-    int maxSatisfaction(vector<int>& satisfaction) {
-        memset(t,-1,sizeof(t));
-        sort(satisfaction.begin(),satisfaction.end());
-        int ans= solve(satisfaction,1,0);
-        if(ans<0)
-            return 0;
-        
-       return ans;
+    int maxSatisfaction(vector<int>& v) {
+        int n=v.size();
+        sort(v.begin(),v.end());
+        vector<vector<int>> dp(n+1,vector<int>(n+1,0));
+        for(int i=n-1;i>=0;i--){
+            for(int j=i;j>=0;j--){
+                int left=v[i]*(j+1)+dp[i+1][j+1];
+                int right=dp[i+1][j];
+                dp[i][j]=max(left,right);
+            }
+        }
+        return dp[0][0];
     }
 };
