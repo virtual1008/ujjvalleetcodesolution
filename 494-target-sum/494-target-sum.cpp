@@ -20,7 +20,7 @@ public:
         //if(d<0) return 0;
         if(d%2!=0 ||d<0) return 0;
         d/=2;
-        vector<vector<int>> dp(nums.size()+1,vector<int>(d+1,-1));
+        vector<vector<int>> dp(nums.size(),vector<int>(d+1,-1));
         return rec(0,d,nums,dp);
         
     }
