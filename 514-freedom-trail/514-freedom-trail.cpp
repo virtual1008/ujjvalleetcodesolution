@@ -18,8 +18,8 @@ public:
             m[ring[i]].push_back(i);
         }
         int k=n;
-        if(k<key.size()) k=key.size();
-        dp=vector<vector<int>>(k+1,vector<int>(k+1,-1));
+        k=key.size();
+        dp=vector<vector<int>>(k,vector<int>(n,-1));
         return rec(0,ring,key);
     }
 };
