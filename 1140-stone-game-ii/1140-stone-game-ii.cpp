@@ -16,7 +16,7 @@ public:
         int sum=0;
         for(auto it:p) sum+=it;
         int n=p.size();
-        dp=vector<vector<int>>(n+1,vector<int>(2*n+1,INT_MAX));
+        dp=vector<vector<int>>(n+1,vector<int>(n+1,INT_MAX));
         int diff=rec(0,p,1);
         return (sum+diff)/2;
     }
