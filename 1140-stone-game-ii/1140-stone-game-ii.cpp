@@ -1,29 +1,23 @@
 class Solution {
 public:
-    int n;
-    int dp[101][101];
-    int rec(int i,int m,vector<int> pre){
-        if(i>=n) return 0;
-        int ans=INT_MIN,cnt=0,nm;
-        if(dp[i][m]!=-1) return dp[i][m];
-        for(int j=i;j<n&&j<(i+2*m);j++){
-            nm=max(j-i+1,m);
-            int left=rec(j+1,nm,pre);
-            int temp=(pre[j+1]-pre[i])+(pre[n]-pre[j+1])-left;
-            ans=max(ans,temp);
+    vector<vector<int>> dp;
+    int rec(int i,vector<int> p,int m){
+        if(i>=p.size()) return 0;
+        int ans=INT_MIN;
+        if(dp[i][m]!=INT_MAX) return dp[i][m];
+        int t=0;
+        for(int j=0;j<2*m;j++){
+            if(i+j<p.size()) t+=p[i+j];
+            ans=max(ans,t-rec(i+j+1,p,max(m,j+1)));
         }
         return dp[i][m]=ans;
-        
     }
-    int stoneGameII(vector<int>& piles) {
-        n = size(piles);
-        memset(dp, -1, sizeof(dp));
-        vector<int>pre(n+1, 0);
-        
-        for(int i = 1; i<n; i++)
-            pre[i] = pre[i-1] + piles[i-1];
-        
-        pre[n] = pre[n-1] + piles[n-1];
-        return rec(0,1,pre);
+    int stoneGameII(vector<int>& p) {
+        int sum=0;
+        for(auto it:p) sum+=it;
+        int n=p.size();
+        dp=vector<vector<int>>(n+1,vector<int>(2*n+1,INT_MAX));
+        int diff=rec(0,p,1);
+        return (sum+diff)/2;
     }
 };
