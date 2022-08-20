@@ -1,39 +1,36 @@
 class Solution {
-public: 
+public:
     int n,m;
-   // vector<vector<int>> vis;
-    int dfs(int i,int j,vector<vector<int>>& matrix,int cnt,int pre,vector<vector<int>>& vis){
-        if(i<0 || j<0 || i>=n || j>=m || pre>=matrix[i][j] ){
-             
-            return 0;
-        }
-        if(vis[i][j]!=-1)
-            return vis[i][j]; 
+    int dfs(int i,int j,int pre,vector<vector<int>> &matrix,vector<vector<int>> &dp){
+        if(i<0 || j<0 || i>=n || j>=m || pre>=matrix[i][j]) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
         int temp=0;
         int val;
-        val=dfs(i+1,j,matrix,cnt+1,matrix[i][j],vis);
-        temp=max(temp,1+val);
-       val= dfs(i-1,j,matrix,cnt+1,matrix[i][j],vis);
-        temp=max(temp,1+val);
-        val=dfs(i,j+1,matrix,cnt+1,matrix[i][j],vis);
-        temp=max(temp,1+val);
-        val=dfs(i,j-1,matrix,cnt+1,matrix[i][j],vis);
-        temp=max(temp,1+val);
-        return vis[i][j]=temp;
+        val=dfs(i+1,j,matrix[i][j],matrix,dp);
+        temp=max(1+val,temp);
+        val=dfs(i-1,j,matrix[i][j],matrix,dp);
+        temp=max(1+val,temp);
+        val=dfs(i,j+1,matrix[i][j],matrix,dp);
+        temp=max(1+val,temp);
+        val=dfs(i,j-1,matrix[i][j],matrix,dp);
+        temp=max(1+val,temp);
+        return dp[i][j]=temp;
     }
     int longestIncreasingPath(vector<vector<int>>& matrix) {
-         n=matrix.size();
-         m=matrix[0].size();
+        n=matrix.size();
+        m=matrix[0].size();
         int ans=0;
-                 vector<vector<int>> vis(n,vector<int>(m,-1));
-         for(int i=0;i<n;i++){
-             for(int j=0;j<m;j++){
-                 if(vis[i][j]==1)
-                     continue;
-                 int val=dfs(i,j,matrix,0,-1,vis);
-                ans=max(ans,val);
-             }
-         }
+        vector<vector<int>> dp(n,vector<int>(m,-1));
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(dp[i][j]!=-1){
+                    ans=max(ans,dp[i][j]);
+                }else{
+                    int val=dfs(i,j,-1,matrix,dp);
+                    ans=max(ans,val);
+                }
+            }
+        }
         return ans;
     }
 };
