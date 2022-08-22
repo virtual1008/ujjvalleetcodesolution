@@ -18,7 +18,7 @@ public:
         }
         else
         {
-             return max(nums[k], *max_element(begin(nums), begin(nums) + k - 1));
+             return  max(*max_element(begin(nums), begin(nums) + k-1),nums[k]);
         }
     }
 };
