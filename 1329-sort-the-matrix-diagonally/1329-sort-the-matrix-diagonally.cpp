@@ -6,20 +6,22 @@ public:
          for(int i=0;i<n;i++){
              for(int j=0;j<m;j++){
                  vector<int> temp;
+                 priority_queue<int,vector<int>,greater<int>> pq;
                  int a=i,b=j;
                  while(a<n && b<m){
-                     temp.push_back(mat[a][b]);
+                     pq.push(mat[a][b]);
                      a++;
                      b++;
                  }
-                 sort(temp.begin(),temp.end());
+                 //sort(temp.begin(),temp.end());
                  a=i,b=j;
-                 int c=0;
-                 while(c<temp.size()){
-                     mat[a][b]=temp[c];
+                 //int c=0;
+                 while(!pq.empty()){
+                     int c=pq.top();
+                     mat[a][b]=c;
                      a++;
                      b++;
-                     c++;
+                     pq.pop();
                  }
              }
          }
