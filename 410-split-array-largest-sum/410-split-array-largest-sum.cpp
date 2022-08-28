@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<vector<int>> dp;
     int rec(int i,int m,vector<int> &nums){
-        if(i==nums.size()) return -1;
+        if(i==nums.size()) return -1e6;
         int ans=INT_MAX;
         int sum=0;
         if(dp[i][m]!=-1) return dp[i][m];
