@@ -1,18 +1,12 @@
 class Solution {
 public:
-    int ans=INT_MAX;
-    void rec(int k,int copy,int n,int cnt){
-        if(k==n){
-            ans=min(ans,cnt);
-        }else if(k+copy<=n){
-           rec(k+copy,copy,n,cnt+1);
-            rec(k+copy,copy+k,n,cnt+2);
-        }
-        
+    int rec(int k,int copy,int cnt,int n){
+        if(n==k) return cnt;
+        if(n<k) return 1e6;
+        return min(rec(k+copy,copy,cnt+1,n),rec(k+copy,copy+k,cnt+2,n));
     }
     int minSteps(int n) {
         if(n==1) return 0;
-        rec(1,1,n,1);
-        return ans;
+        return rec(1,1,1,n);
     }
 };
