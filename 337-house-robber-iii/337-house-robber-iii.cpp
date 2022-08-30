@@ -11,19 +11,18 @@
  */
 class Solution {
 public:
-    int rec(TreeNode* root ,map<TreeNode*,int>& dp){
-        if(root==NULL) return 0;
-        if(root->left==NULL && root->right==NULL) return root->val;
-        if(dp[root]!=0) return dp[root];
-        int pick=root->val;
-        if(root->left) pick+=rec(root->left->left,dp)+rec(root->left->right,dp);
-        if(root->right) pick+=rec(root->right->left,dp)+rec(root->right->right,dp);
-        int notpick=rec(root->left,dp)+rec(root->right,dp);
-        return dp[root]=max(pick,notpick);
+    map<TreeNode*,int> dp;
+    int rec(TreeNode * Node){
+        if(Node==NULL) return 0;
+        if(dp[Node]!=0) return dp[Node];
+        if(Node->left==NULL && Node->right==NULL) return Node->val;
+        int pick=Node->val;
+        if(Node->left) pick+=rec(Node->left->left)+rec(Node->left->right);
+        if(Node->right)pick+=rec(Node->right->left)+rec(Node->right->right);
+        int notpick=rec(Node->left)+rec(Node->right);
+        return dp[Node]=max(pick,notpick);
     }
     int rob(TreeNode* root) {
-        map<TreeNode*,int> dp;
-        int c=rec(root,dp);
-        return c;
+        return rec(root);
     }
 };
