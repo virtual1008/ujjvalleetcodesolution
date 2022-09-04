@@ -34,7 +34,7 @@ public:
             }
         }
         for(auto it:mp){
-            cout<<it.first<<"->";
+            //cout<<it.first<<"->";
             auto cv=it.second;
             sort(cv.begin(),cv.end());
             vector<int> temp;
