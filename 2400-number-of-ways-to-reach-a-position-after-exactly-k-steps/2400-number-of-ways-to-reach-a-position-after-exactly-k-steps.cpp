@@ -6,7 +6,7 @@ public:
     int rec(int k,int d){
         if(d>=k) return d==k;
         if(dp[k][d]==0){
-            dp[k][d]=(1+rec(k-1,d+1)%mod+rec(k-1,abs(d-1)%mod))%mod;
+            dp[k][d]=(1+rec(k-1,d+1)%mod+rec(k-1,abs(d-1))%mod)%mod;
         }
         return dp[k][d]-1;
     }
