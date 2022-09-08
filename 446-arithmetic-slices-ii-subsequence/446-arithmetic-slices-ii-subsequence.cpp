@@ -7,7 +7,7 @@ public:
             for(int j=0;j<i;j++){
                 long long d=(long long)nums[i];
                 d-=(long long)nums[j];
-                if(mp[j][d]!=0) ans+=mp[j][d];
+                ans+=mp[j][d];
                 mp[i][d]=mp[j][d]+mp[i][d]+1;
             }
         }
