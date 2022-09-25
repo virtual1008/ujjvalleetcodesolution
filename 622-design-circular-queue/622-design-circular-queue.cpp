@@ -17,9 +17,9 @@ public:
     
     bool deQueue() {
         if(temp.size()>0){
-            reverse(temp.begin(),temp.end());
-            temp.pop_back();
-            reverse(temp.begin(),temp.end());
+           // reverse(temp.begin(),temp.end());
+            temp.erase(temp.begin());
+            //reverse(temp.begin(),temp.end());
             return true;
         }
         return false;
