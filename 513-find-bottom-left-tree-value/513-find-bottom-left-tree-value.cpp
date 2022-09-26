@@ -17,16 +17,17 @@ public:
         q.push(root);
         while(!q.empty()){
             int n=q.size();
-            vector<int> ch;
+            //vector<int> ch;
+            long long h=INT_MAX;
+            h+=10;
             for(int i=0;i<n;i++){
                 root=q.front();
                 q.pop();
                 if(root->left) q.push(root->left);
                 if(root->right) q.push(root->right);
-                ch.push_back(root->val);
+                if(h-10==INT_MAX) h=root->val;
             }
-            if(ch.size()>0)
-            ans=ch[0];
+            if(h-10!=INT_MAX) ans=h;
         }
         return ans;
     }
