@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    map<int,int> mp;
+    unordered_map<int,int> mp;
     int maxi=0;
     int rec(TreeNode* root){
         if(root==NULL) return 0;
