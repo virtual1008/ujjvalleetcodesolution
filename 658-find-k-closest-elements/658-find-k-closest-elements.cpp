@@ -11,6 +11,7 @@ public:
             p.pop();
             ans.push_back(it.second);
         }
+        while(!p.empty()) p.pop();
         sort(ans.begin(),ans.end());
         return ans;
     }
