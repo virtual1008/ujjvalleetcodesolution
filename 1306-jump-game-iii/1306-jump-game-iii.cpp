@@ -5,7 +5,7 @@ public:
         if(i<0 || i>=arr.size() || vis[i]) return false;
         if(arr[i]==0) return true;
         vis[i]=true;
-        if(dp[i]!=-1) return dp[i];
+        //if(dp[i]!=-1) return dp[i];
         //cout<<i<<endl;
         //if(arr[i]==0) return false;
         //if(i<0 || i>=arr.size()) return false;
