@@ -1,7 +1,7 @@
 class Solution {
 public:
     long long distinctNames(vector<string>& ideas) {
-        map<int,set<string>> mp;
+        map<int,unordered_set<string>> mp;
         for(auto it:ideas){
             mp[it[0]-'a'].insert(it.substr(1));
         }
