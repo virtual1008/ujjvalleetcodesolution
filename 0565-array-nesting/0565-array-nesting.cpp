@@ -14,8 +14,10 @@ public:
         vector<bool> vis(nums.size(),false);
         vector<int> dist(nums.size(),1);
         for(int i=0;i<nums.size();i++){
-            int len=0;
-                rec(vis,i,dist,len,nums);
+            if(!vis[i]){
+                int len=0;
+                rec(vis,i,dist,len,nums);   
+            }
         }
         int maxi=0;
         for(auto it:dist){
