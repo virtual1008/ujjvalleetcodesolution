@@ -1,29 +1,20 @@
 class Solution {
 public:
     vector<vector<int>> ans;
-    void rec(int a,int c,int &n,vector<int> temp,int k){
+    void rec(int a,int &k,int &n,vector<int> temp){
         if(temp.size()==k){
             ans.push_back(temp);
-            return;
+            return ;
         }
-        for(int i=a;i<n;i++){
-            if(c&(1<<i)){
-                c^=(1<<i);
-                temp.push_back(i+1);
-                rec(i+1,c,n,temp,k);
-                temp.pop_back();
-                c|=(1<<i);
-            }
+        for(int i=a;i<=n;i++){
+            temp.push_back(i);
+            rec(i+1,k,n,temp);
+            temp.pop_back();
         }
     }
     vector<vector<int>> combine(int n, int k) {
         vector<int> temp;
-        int c=0;
-        for(int i=0;i<n;i++){
-            c+=(1<<i);
-        }
-        //cout<<c;
-        rec(0,c,n,temp,k);
+        rec(1,k,n,temp);
         return ans;
     }
 };
