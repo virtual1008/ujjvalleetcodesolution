@@ -1,21 +1,23 @@
 class Solution {
 public:
     vector<vector<int>> dp;
-    int rec(int i,int m,vector<int> p){
+    int rec(int i,vector<int> p,int m){
         if(i>=p.size()) return 0;
-        if(dp[i][m]!=-1) return dp[i][m];
-        int mini=INT_MIN;
-         int ans=0;
-            for(int j=0;j<2*m;j++){
-                if(i+j<p.size()) ans+=p[i+j];
-                mini=max(mini,ans-rec(i+j+1,max(m,j+1),p));
-            }
-        return dp[i][m]=mini;
+        int ans=INT_MIN;
+        if(dp[i][m]!=INT_MAX) return dp[i][m];
+        int t=0;
+        for(int j=0;j<2*m;j++){
+            if(i+j<p.size()) t+=p[i+j];
+            ans=max(ans,t-rec(i+j+1,p,max(m,j+1)));
+        }
+        return dp[i][m]=ans;
     }
     int stoneGameII(vector<int>& p) {
         int sum=0;
-        dp=vector<vector<int>>(p.size()+1,vector<int>(p.size()+1,-1));
         for(auto it:p) sum+=it;
-        return (sum+rec(0,1,p))/2;
+        int n=p.size();
+        dp=vector<vector<int>>(n+1,vector<int>(n+1,INT_MAX));
+        int diff=rec(0,p,1);
+        return (sum+diff)/2;
     }
 };
