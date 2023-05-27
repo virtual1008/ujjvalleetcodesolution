@@ -1,25 +1,22 @@
 class Solution {
 public:
-    int n;
-    int dp[50001];
-    string stoneGameIII(vector<int>& stoneValue) {
-        n=stoneValue.size();
-        memset(dp,-1,sizeof(dp));
-        int ans=fun(0,stoneValue);
-        return ans==0?"Tie":ans>0?"Alice":"Bob";
+    vector<int> dp;
+    int rec(int i,vector<int> & stone){
+        if(i>=stone.size()) return 0;
+        if(dp[i]!=-1) return dp[i];
+        int total=0;
+        int maxi=INT_MIN;
+        for(int j=0;j<3;j++){
+            if(i+j<stone.size()) total+=stone[i+j];
+            maxi=max(maxi,total-rec(i+j+1,stone));
+        }
+        return dp[i]=maxi;
     }
-  int  fun(int i,vector<int>& s){
-        if(i>=n) return 0;
-      if(dp[i]!=-1) return dp[i];
-        int ans=INT_MIN,sum=0;
-       for(int j=0;j<3;j++){
-          
-           if(i+j<n){
-                sum+=s[i+j];
-               ans=max(ans,sum-fun(i+j+1,s));
-           } else break;
-       }
-        return dp[i]= ans;
-       
+    string stoneGameIII(vector<int>& stoneValue) {
+        dp=vector<int>(stoneValue.size(),-1);
+        int c=rec(0,stoneValue);
+        if(c>0) return "Alice";
+        else if(c==0) return "Tie";
+        return "Bob";
     }
 };
