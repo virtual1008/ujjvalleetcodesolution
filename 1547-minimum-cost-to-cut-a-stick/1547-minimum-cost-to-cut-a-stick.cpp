@@ -12,7 +12,7 @@ public:
         return dp[i][j]=ans;
     }
     int minCost(int n, vector<int>& cuts) {
-        dp=vector<vector<int>>(cuts.size()+1,vector<int>(cuts.size()+1,-1));
+        dp=vector<vector<int>>(cuts.size(),vector<int>(cuts.size(),-1));
         sort(cuts.begin(),cuts.end());
         return rec(0,n,0,cuts.size()-1,cuts);
     }
