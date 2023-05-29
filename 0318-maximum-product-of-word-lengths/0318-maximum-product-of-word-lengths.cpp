@@ -15,7 +15,7 @@ public:
         for(auto it=mp.begin();it!=mp.end();it++){
             int c1=it->second;
             string s1=it->first;
-            for(auto e=it;e!=mp.end();e++){
+            for(auto e=mp.begin();e!=it;e++){
                 string s2=e->first;
                 int c2=e->second;
                 if(c1&c2) continue;
