@@ -12,12 +12,12 @@ public:
             
         }
         int ans=0;
-        for(auto it:mp){
-            int c1=it.second;
-            string s1=it.first;
-            for(auto e:mp){
-                string s2=e.first;
-                int c2=e.second;
+        for(auto it=mp.begin();it!=mp.end();it++){
+            int c1=it->second;
+            string s1=it->first;
+            for(auto e=it;e!=mp.end();e++){
+                string s2=e->first;
+                int c2=e->second;
                 if(c1&c2) continue;
                 int k=s1.size();
                 k*=s2.size();
