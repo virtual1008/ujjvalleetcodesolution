@@ -6,6 +6,7 @@ public:
             carry=a&b;
             a^=b;
             b=carry<<1;
+            cout<<carry<<" "<<a<<" "<<b<<"\n";
         }
         return a;
     }
