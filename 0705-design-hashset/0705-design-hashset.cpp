@@ -1,30 +1,27 @@
 class MyHashSet {
 public:
-    const int BUCKET_SIZE = 100; // whatever number u like
-    vector<int> bucket[100];
+    vector<bool> temp;
     MyHashSet() {
+        for(int i=0;i<=1000000;i++) temp.push_back(false); 
+    }
     
+    void add(int key) {
+        temp[key]=true;
     }
-
-    void add(int key) { 
-        int index = key % BUCKET_SIZE;
-        if(!contains(key))
-            bucket[index].push_back(key);
-    }
-
+    
     void remove(int key) {
-        int index = key % BUCKET_SIZE;
-        for(int i = 0; i < bucket[index].size(); i++)
-            if(bucket[index][i] == key) { 
-                bucket[index].erase(bucket[index].begin() + i); 
-                break; 
-            }
+        temp[key]=false;
     }
-
+    
     bool contains(int key) {
-        int index = key % BUCKET_SIZE;
-        for(int i = 0; i < bucket[index].size(); i++)
-            if(bucket[index][i] == key) return true; 
-        return false;
+        return temp[key];
     }
 };
+
+/**
+ * Your MyHashSet object will be instantiated and called as such:
+ * MyHashSet* obj = new MyHashSet();
+ * obj->add(key);
+ * obj->remove(key);
+ * bool param_3 = obj->contains(key);
+ */
