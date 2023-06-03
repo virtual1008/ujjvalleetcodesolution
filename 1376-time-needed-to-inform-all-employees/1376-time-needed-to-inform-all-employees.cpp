@@ -6,7 +6,8 @@ public:
             if(it==parent) continue;
             ans=max(ans,rec(it,node,adj,informTime,manage));
         }
-        return ans+informTime[node];
+        ans+=informTime[node];
+        return ans;
     }
     int numOfMinutes(int n, int headID, vector<int>& manager, vector<int>& informTime) {
         vector<int> adj[n];
