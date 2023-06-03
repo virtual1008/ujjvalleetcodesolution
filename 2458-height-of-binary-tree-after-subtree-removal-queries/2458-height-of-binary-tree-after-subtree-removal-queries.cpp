@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    map<int,int> mp,height;
+    unordered_map<int,int> mp,height;
     map<int,set<pair<int,int>>> mpair;
     int rec(TreeNode* node,int level){
         if(node==NULL) return 0;
