@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void helper(int start, const vector<int>& cookies, vector<int>& temp, int k, int& ans) {
+    void helper(int start, vector<int>& cookies, vector<int>& temp, int k, int& ans) {
         int n = cookies.size();
         if (start == n) {
             int maxi = INT_MIN;
@@ -12,9 +12,9 @@ public:
         }
 
         for (int i = 0; i < k; i++) {
-            temp[i] += cookies[start]; // take
+            temp[i] += cookies[start]; 
             helper(start + 1, cookies, temp, k, ans);
-            temp[i] -= cookies[start]; // back-track
+            temp[i] -= cookies[start]; 
         }
     }
 
