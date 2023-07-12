@@ -1,20 +1,34 @@
 class Solution {
 public:
-    void detectCycle(int i,bool *isVis,bool *dfs,vector<vector<int>> &graph,const int &n){
-        isVis[i] = dfs[i] = true;
-        for(const int it:graph[i]){
-            if(isVis[it] == 0) detectCycle(it,isVis,dfs,graph,n);
-            if(dfs[it] == 1) return;
+    void rec(int node,vector<int> adj[],vector<bool> &vis,vector<bool> &dfsvis){
+        vis[node]=dfsvis[node]=true;
+        for(auto it:adj[node]){
+            if(vis[it]==false) rec(it,adj,vis,dfsvis);
+            if(dfsvis[it]) return ;
         }
-        dfs[i] = false;
+        dfsvis[node]=false;
+        
     }
     vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
         vector<int> ans;
-        const int n = graph.size();
-        bool *isVis = new bool[n]{false},*dfs = new bool[n]{false};
-        for(int i = 0;i<n;i++)
-            if(isVis[i] == 0) detectCycle(i,isVis,dfs,graph,n);
-        for(int i = 0;i<n;i++) if(dfs[i] == 0) ans.emplace_back(i);
+        int n=graph.size();
+        vector<int> adj[n];
+        int i=0;
+        for(auto it:graph){
+            for(auto e:it){
+                adj[i].push_back(e);
+            }
+            i++;
+        }
+        vector<bool> dfs(n,false),vis(n,false);
+        for(int i=0;i<n;i++){
+            if(!vis[i]){
+                rec(i,adj,vis,dfs);
+            }
+        }
+        for(int i=0;i<n;i++){
+            if(dfs[i]==0)ans.push_back(i);
+        }
         return ans;
     }
 };
