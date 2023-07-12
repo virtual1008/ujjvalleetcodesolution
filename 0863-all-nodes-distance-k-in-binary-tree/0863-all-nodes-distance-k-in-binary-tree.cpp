@@ -1,54 +1,58 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
 class Solution {
 public:
-    void parentmapping(TreeNode* root,map<TreeNode*,TreeNode*> & parent){
-        queue<TreeNode*> q;
-        q.push(root);
-        while(!q.empty()){
-            TreeNode* tnode=q.front();
-            q.pop();
-            if(tnode->left){
-                parent[tnode->left]=tnode;
-                q.push(tnode->left);
-            }
-            if(tnode->right){
-                parent[tnode->right]=tnode;
-                q.push(tnode->right);
-            }
+    map<TreeNode*,TreeNode*> parent;
+    void rec(TreeNode* root){
+        if(root==NULL)return;
+        if(root->left){
+            parent[root->left]=root;
+            rec(root->left);
+        }
+        if(root->right){
+            parent[root->right]=root;
+            rec(root->right);
         }
     }
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
-       map<TreeNode*,TreeNode*> ma;
-        parentmapping(root,ma);
-        map<TreeNode* ,bool> visited;
         vector<int> ans;
-        int cnt=0;
         queue<TreeNode*> q;
         q.push(target);
-        visited[target]=true;
+        rec(root);
+        map<TreeNode*,bool> vis;
+        vis[target]=true;
         while(!q.empty()){
             int n=q.size();
-            if(cnt++==k) break;
+            if(k==0) break;
             for(int i=0;i<n;i++){
-                TreeNode* node=q.front();
+                auto temp=q.front();
                 q.pop();
-                if(node->left && !visited[node->left]){
-                    q.push(node->left);
-                    visited[node->left]=true;
+                if(temp->left && !vis[temp->left]){
+                    q.push(temp->left);
+                    vis[temp->left]=true;
                 }
-                if(node->right && !visited[node->right]){
-                    q.push(node->right);
-                    visited[node->right]=true;
+                if(temp->right && !vis[temp->right]){
+                    q.push(temp->right);
+                    vis[temp->right]=true;
                 }
-                if(ma[node] && !visited[ma[node]]){
-                    q.push(ma[node]);
-                    visited[ma[node]]=true;
+                if(parent[temp] && !vis[parent[temp]]){
+                    q.push(parent[temp]);
+                    vis[parent[temp]]=true;
                 }
             }
+            k--;
         }
         while(!q.empty()){
-            TreeNode* node=q.front();
+            auto it=q.front();
             q.pop();
-            ans.push_back(node->val);
+            ans.push_back(it->val);
         }
         return ans;
     }
